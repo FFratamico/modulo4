@@ -5,8 +5,8 @@ import { DataSource, DataSourceOptions } from "typeorm";
 
 export const AppDataSource: DataSourceOptions = ({
     type: 'postgres',
-    host: process.env.DB_HOST_DOCKER,
-    port: parseInt(process.env.DB_PORT_DOCKER!, 10),
+    host: process.env.DB_HOST_DOCKER || 'postgres',
+    port: parseInt(process.env.DB_PORT_DOCKER!, 10) || 5432,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
