@@ -13,7 +13,7 @@ export const AppDataSource: DataSourceOptions = ({
     synchronize: false,
     entities: ['dist/**/*.entity{.js,.ts}'], // busca automaticamente todas las entidades del proyecto.
     migrations: ['dist/migrations/*{.ts,.js}'],
-    ssl: { rejectUnauthorized: false },
+    ssl: true,
 });
 
 export const postgresDataSourceConfig = registerAs(
