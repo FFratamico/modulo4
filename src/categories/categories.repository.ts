@@ -32,6 +32,7 @@ export class CategoryRepository{
         await this.repository.save(category);
       }
     }
+    return 'Categorias creadas correctamene';
   }
 
   async findOneByName(name: string): Promise<Category | null> {

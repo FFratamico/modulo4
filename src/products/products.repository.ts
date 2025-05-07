@@ -67,6 +67,7 @@ export class ProductsRepository {
         await this.repository.save(newProduct);
       }
     }
+    return 'productos creados correctamente';
   }
 
   async getProducts() {

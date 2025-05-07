@@ -10,7 +10,7 @@ export class FileUploadService {
     ){}
 
     async uploadFile (file:UploadFileDTO, id: string){
-        const { fieldname, buffer, originalname, mimetype, size } = file;
+        const { buffer, originalname } = file;
 
         const product = await this.productRepository.getProductById(id);
 
