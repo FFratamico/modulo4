@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { IdParamDTO } from 'src/OthersDtos/id-param.dto';
@@ -13,12 +13,14 @@ export class OrdersController {
 
   @Post()
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.CREATED)
   async addOrder(@Body() newOrder: CreateOrderDto) {
     return await this.ordersService.addOrder(newOrder);
   }
 
   @Get(':id')
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   findOne(@Param() param: IdParamDTO) {
     return this.ordersService.getOrder(param.id);
   }

@@ -8,6 +8,8 @@ import {
   Put,
   Query,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -28,12 +30,14 @@ export class UsersController {
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async getAllUsers() {
     return await this.usersService.getAll();
   }
 
   @Get('page')
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async getUsersWithPagination(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 5,
@@ -43,6 +47,7 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async getUserById(@Param() param: IdParamDTO) {
     return await this.usersService.getUserById(param.id);
   }
@@ -54,12 +59,14 @@ export class UsersController {
 
   @Delete(':id')
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async deleteUser(@Param() param: IdParamDTO) {
     return await this.usersService.deleteUser(param.id);
   }
 
   @Put(':id')
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async updateUser(
     @Param() param: IdParamDTO,
     @Body() updateUser: UpdateUserDTO,

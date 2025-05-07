@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { IdParamDTO } from 'src/OthersDtos/id-param.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -14,6 +14,7 @@ export class CategoriesController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   getAllCategories(){
     return this.categoriesService.getAllCategories();
   }

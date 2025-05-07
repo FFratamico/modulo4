@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Res, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Res, Query, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -16,11 +16,13 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   async getAllProducts() {
     return await this.productsService.getAll();
   }
 
   @Get('page')
+  @HttpCode(HttpStatus.OK)
     async getUsersWithPagination(
       @Query('page') page: number = 1,
       @Query('limit') limit: number = 5,
@@ -29,6 +31,7 @@ export class ProductsController {
     }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   async getProductById(@Param() param: IdParamDTO) {
     return await this.productsService.getProductById(param.id);
   }
@@ -36,6 +39,7 @@ export class ProductsController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() newProduct: CreateProductDto) {
     return await this.productsService.createProduct(newProduct);
   }
@@ -48,6 +52,7 @@ export class ProductsController {
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async remove(@Param() param: IdParamDTO) {
     return await this.productsService.removeProduct(param.id);
   }
@@ -56,6 +61,7 @@ export class ProductsController {
   @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard) // Header de autorizacion
+  @HttpCode(HttpStatus.OK)
   async update(@Param() param: IdParamDTO, @Body() updateProduct: UpdateProductDto) {
     return await this.productsService.update(param.id, updateProduct)
   }
