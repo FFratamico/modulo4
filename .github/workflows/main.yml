@@ -1,0 +1,21 @@
+name: render-deploy-modulo4
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{secrets.RENDER_SERVICE_ID}}
+          api-key: ${{secrets.RENDER_API_KEY}}
+          wait-for-succes: true
