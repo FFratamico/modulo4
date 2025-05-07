@@ -5,12 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
     env_file:
       - .env.development
-    environment:
-      NODE_ENV: docker
     depends_on:
       - postgres
     networks:
