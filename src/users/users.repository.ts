@@ -1,10 +1,11 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdateUserDTO } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { Order } from "src/orders/entities/order.entity";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserRepository{
@@ -15,7 +16,7 @@ export class UserRepository{
         {
             email: `fausto@mail.com`,
             name: `Fausto Fratamico`,
-            password: `123456`,
+            password: `Fausto@123456`,
             address: `Falsa 123`,
             phone: 456789,
             country: `Argentina`,
@@ -25,7 +26,7 @@ export class UserRepository{
         {
             email: `gisela@mail.com`,
             name: `Gisela torrez`,
-            password: `456789`,
+            password: `Gisela@123456`,
             address: `Falsa 345`,
             phone: 996574,
             country: `Argentina`,
@@ -35,7 +36,7 @@ export class UserRepository{
         {
             email: `valentino@mail.com`,
             name: `Valentino Sparvoli`,
-            password: `789123`,
+            password: `Valentino@123456`,
             address: `Falsa 789`,
             phone: 5589321,
             country: `Argentina`,
@@ -45,10 +46,17 @@ export class UserRepository{
     ];
 
     async addUsers(){
-        for(const users of this.mockUsers){
-            const exists = await this.repository.findOne({where: {email: users.email}});
-            if(!exists){await this.repository.save(users)}
+        for(const user of this.mockUsers){
+            const {password} = user
+            
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            const userSave = this.repository.create({...user, password: hashedPassword});
+
+            await this.repository.save(userSave);
         }
+
+        return 'precarga de usuario realizada con exito';
     }
     
     async getUsers(){
