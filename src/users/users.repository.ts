@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdateUserDTO } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -6,6 +6,7 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { Order } from "src/orders/entities/order.entity";
 import * as bcrypt from 'bcrypt';
+import { Role } from "src/config/enum/role.enum";
 
 @Injectable()
 export class UserRepository{
@@ -21,7 +22,8 @@ export class UserRepository{
             phone: 456789,
             country: `Argentina`,
             city: `springfield`,
-            orders: []
+            orders: [],
+            adminitrator: Role.Admin
         },
         {
             email: `gisela@mail.com`,
