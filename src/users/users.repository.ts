@@ -6,6 +6,7 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { Order } from "src/orders/entities/order.entity";
 import * as bcrypt from 'bcrypt';
+import { Role } from "src/config/enum/role.enum";
 
 @Injectable()
 export class UserRepository{
@@ -22,7 +23,7 @@ export class UserRepository{
             country: `Argentina`,
             city: `springfield`,
             orders: [],
-            adminitrator: "admin"
+            administrator: Role.Admin
         },
         {
             email: `gisela@mail.com`,
