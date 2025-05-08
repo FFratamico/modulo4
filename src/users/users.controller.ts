@@ -12,7 +12,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { IdParamDTO } from 'src/OthersDtos/id-param.dto';
@@ -21,13 +20,14 @@ import { Role } from 'src/config/enum/role.enum';
 import { RolesGuard } from 'src/auth/guard/roles/roles.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiBearerAuth()
+
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard) // Header de autorizacion
   @HttpCode(HttpStatus.OK)
@@ -36,6 +36,7 @@ export class UsersController {
   }
 
   @Get('page')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
   @HttpCode(HttpStatus.OK)
   async getUsersWithPagination(
@@ -46,6 +47,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param() param: IdParamDTO) {
@@ -58,6 +60,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
   @HttpCode(HttpStatus.OK)
   async deleteUser(@Param() param: IdParamDTO) {
@@ -65,6 +68,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard) // Header de autorizacion
   @HttpCode(HttpStatus.OK)
   async updateUser(
