@@ -30,6 +30,9 @@ export class User {
   @Column({length: 50, nullable: true})
   city: string;
 
+  @Column('int')
+  age: number;
+
   @Column({type: 'enum', enum: Role, default:Role.User})
   administrator: Role
 
